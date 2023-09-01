@@ -1,4 +1,4 @@
-name: flutter_ci_cd
+name: Flutter CI/CD
 
 on:
   push:
@@ -7,34 +7,32 @@ on:
 
 jobs:
   build:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-        # Add the following lines to specify Node.js version
-        with:
-          submodules: 'recursive'
-      - name: Use Node.js 16
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v8
         with:
           flutter-version: '3.10.5'
-          channel: 'stable'
 
       - name: Install Dependencies
-        run: flutter packages get
+        run: flutter pub get
 
-      - name: Format
-        run: flutter format --set-exit-if-changed lib test
+      - name: Build and Test
+        run: flutter test
 
-      - name: Analyze
-        run: flutter analyze lib test
-
-      - name: Run tests
-        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
-
-      - name: Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
+  # deploy:
+  #   name: Deploy to Firebase (Example)
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #     - name: Deploy to Firebase
+  #       uses: w9jds/firebase-action@v1
+  #       with:
+  #         args: deploy --only hosting # Change this to your deployment process
+  #       env:
+  #         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

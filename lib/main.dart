@@ -8,17 +8,17 @@ import 'package:flutter/material.dart';
 Future<void> main()  async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "AIzaSyC6SjRd9vDFqqF9TC--9gLUfT2MRGumZmQ",
-        appId: "1:758690890683:web:022143414a79cc2b0d7a9e",
-        messagingSenderId: "758690890683",
-        projectId: "authentication-4ea9a",
-      ),
-    );
-  }
-  await Firebase.initializeApp();
+  // if (kIsWeb) {
+  //   await Firebase.initializeApp(
+  //     options: const FirebaseOptions(
+  //       apiKey: "AIzaSyC6SjRd9vDFqqF9TC--9gLUfT2MRGumZmQ",
+  //       appId: "1:758690890683:web:022143414a79cc2b0d7a9e",
+  //       messagingSenderId: "758690890683",
+  //       projectId: "authentication-4ea9a",
+  //     ),
+  //   );
+  // }
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

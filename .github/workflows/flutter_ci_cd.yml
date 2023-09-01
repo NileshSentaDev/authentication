@@ -1,29 +1,32 @@
-name: Flutter CI/CD
+name: flutter_ci_cd
 
 on:
   push:
     branches:
-      - master  # Change to the default branch of your repository
+      - master
 
 jobs:
   build:
-    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.10.5  # Change to your desired Flutter version
+          flutter-version: '3.10.5'
+          channel: 'stable'
 
-      - name: Get Dependencies
-        run: flutter pub get
+      - name: Install Dependencies
+        run: flutter packages get
 
-      - name: Run Tests
-        run: flutter test
+      - name: Format
+        run: flutter format --set-exit-if-changed lib test
 
-      - name: Build APK
-        run: flutter build apk --release
+      - name: Analyze
+        run: flutter analyze lib test
+
+      - name: Run tests
+        run: flutter test --no-pub --coverage --test-randomize-ordering-seed random
+
+      - name: Check Code Coverage
+        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
